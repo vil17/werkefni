@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import NavigationBar from './NavigationBar/NavigationBar';
-import { Switch, Route, Redirect } from 'react-router-dom'; //// ath
-import FrontPage from './FrontPage/FrontPage';
-import BossesContainer from './BossesContainer/BossesContainer'
+import React from 'react';
+import NavigationBar from './NavigationBar/';
+import { Switch, Route } from 'react-router-dom'; //// ath
+import FrontPage from './FrontPage'
+import BossesContainer from './BossesContainer'
 
-class App extends Component {
-    render() {
+const App = () => {
         return (
             <>
                 <NavigationBar />
@@ -13,12 +12,11 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/" component={ FrontPage } />
                         <Route exact path="/bosses" component={ BossesContainer } />
-                        <Route path="/news" render={() => <Redirect to="/" />} />
                     </Switch>
                 </div>
             </>
         );
     }
-}
+
 
 export default App;

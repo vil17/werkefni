@@ -14,9 +14,6 @@ class BossContainer extends React.Component {
         const { getBosses } = this.state;
         var bosses = getBosses;
         console.log(bosses, 'bosses')
-        this.setState({
-            bosses: [1,2,3]
-        });
     }
     constructor(props) { //tharf props?
         super(props);
@@ -26,18 +23,12 @@ class BossContainer extends React.Component {
     }
     render() {
         const { bosses } = this.state;
+        console.log(this.state)
         return (
             <div>hi ask</div>
             )
         }
     }
     
-    const mapStateToProps = state => {
-        // const { bosses } = state.bosses;
-        // return {
-        //     bosses: { ...bosses }
-        // }
-        return { hello: 'hi '}
-     }
 
-export default connect(mapStateToProps, mapDispatchToProps )(BossContainer);
+export default connect(null, mapDispatchToProps )(BossContainer);
