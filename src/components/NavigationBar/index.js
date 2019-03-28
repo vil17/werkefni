@@ -3,16 +3,19 @@ import { NavLink } from 'react-router-dom';
 
 const NavigationBar = () => {
   return (
-    <div>
-        <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-                <NavLink exact to="/" className="nav-link">Home</NavLink>
+    <nav aria-label="breadcrumb">
+        <ol className="breadcrumb">
+            <li className="breadcrumb-item">
+                <NavLink exact to="/" className="breadcrumb-item">Home</NavLink>
             </li>
-            <li>
-                <NavLink to="/bosses" className="nav-link">Bosses</NavLink>
+            <li className="breadcrumb-item">
+                <NavLink to="/bosses" className="breadcrumb-item">Bosses</NavLink>
             </li>
-        </ul>
-    </div>
+            <li className="breadcrumb-item">
+                <NavLink to="/addboss" className="breadcrumb-item">Add Boss</NavLink>
+            </li>
+        </ol>
+    </nav>
   )
 }
 

@@ -1,47 +1,55 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getBosses } from '../../actions'
-import bossService from '../../services'
-//import PropTypes from 'prop-types'
-//import AddBossForm from './AddBossForm'
+import PropTypes from 'prop-types'
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        getBosses: () => dispatch(bossService.getBosses()) 
-    };
-}
-
+const divStyle = {
+    margin: '40px',
+    border: '5px solid pink',
+    width: '200px',
+};
 
 class BossContainer extends React.Component {
-    constructor(props) { //tharf props?
-        super(props);
-        this.state = {
-            bosses: [],
-        }
-    }
-    
     componentWillMount() {
-        const { getBosses } = this.state;
-        fetch("http://localhost:4500/api/bosses").then(resp => { return resp.json() }).then(bossList => this.setState({ bosses: bossList }))
+        this.props.getBosses();
     }
-    //herna kemur on update i guess
-    
-    
-    render() {
-    const stuff = this.state.bosses.map(boss =><div key={boss.id}>{boss.name}</div>  );
-        console.log(this.state)
-        return(
-             <div>
-                 <h3>
-                     {stuff}
 
-                     </h3>
-                     </div>
-            )
-        }
-    }
     
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.newBoss) {
+      this.props.bosses.unshift(nextProps.newBoss);
+    }
+}
+
+    render() {
+        const stuff = this.props.bosses.map(boss =>
+            <div key={boss.id} className='card' style={divStyle}>
+                <div>
+                    <img className='img-thumbnail' src={boss.img} alt={boss.name} />
+                </div>
+                <h3>{boss.name}</h3>
+            </div>
+        );
+        return (
+            <div>
+                <h3>
+                    {stuff}
+                </h3>
+            </div>
+        )
+    }
+}
+
+BossContainer.propTypes = {
+    getBosses: PropTypes.func.isRequired,
+    bosses: PropTypes.array.isRequired,
+    newBoss: PropTypes.object
+}
+
+const mapStateToProps = state => ({
+    bosses: state.bosses.items,
+    newBoss: state.bosses.item
+})
 //export default BossContainer
 
-var thisstuff = connect(null, mapDispatchToProps)(BossContainer);
-export default thisstuff;
+export default connect(mapStateToProps, { getBosses })(BossContainer);

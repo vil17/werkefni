@@ -1,27 +1,23 @@
-import React from 'react';
-import NavigationBar from './NavigationBar/';
-import { Switch, Route } from 'react-router-dom'; //// ath
-import FrontPage from './FrontPage'
-import BossesContainer from './BossesContainer'
-import AddBossForm from './AddBossForm'
+import React, { Component } from 'react';
+//import NavigationBar from './NavigationBar/';
+import { Provider } from 'react-redux';
 
-const App = () => {
+//import { Switch, Route } from 'react-router-dom'; //// ath
+//import FrontPage from './FrontPage'
+import BossesContainer from './BossesContainer'
+import AddBossContainer from './AddBossForm'
+
+import store from '../store'
+
+class App extends Component {
+    render() {
         return (
-            <>
-                <NavigationBar />
-                <AddBossForm />
+            <Provider store={store}>
+                <AddBossContainer />
                 <hr />
                 <BossesContainer />
-                {/* <div className="container">
-                    <Switch>
-                        <Route exact path="/" component={ FrontPage } />
-                        <Route exact path="/bosses" component={ BossesContainer } />
-                        <Route exact path="/addboss" component={ AddBossForm } />
-                    </Switch>
-                </div> */}
-            </>
+            </Provider>
         );
     }
-
-
+}
 export default App;

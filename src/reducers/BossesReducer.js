@@ -1,12 +1,31 @@
-import { GET_BOSS } from '../constants'
+import { FETCH_BOSSES, ADD_BOSS } from '../constants'
 
-const bossReducer = (state = [], action) => {
-    console.log('reducer')
+const initialState = {
+    items: [],
+    item: {}
+}
+
+const bossReducer = (state = initialState, action) => {
+    console.log(state, action, ' herres')
     switch (action.type) {
-        case GET_BOSS: return Object.assign({}, state, {
-            articles: [...state.bosses, action.payload] /// /arf ad skoda thetta er ekki viss med thetta
-        });;
-        default: return state.bosses = { bosses: 'hi'};
+        case FETCH_BOSSES:
+            console.log('reducer')
+            return Object.assign({}, state, {
+                ...state,
+                items: action.payload /// /arf ad skoda thetta er ekki viss med thetta
+            });
+        case ADD_BOSS: {
+            console.log('reducerAddBoss')
+            return Object.assign({}, state, {
+                ...state,
+                item: action.payload /// /arf ad skoda thetta er ekki viss med thetta
+                });
+        }
+
+            // case FETCH_BOSSES: return Object.assign({}, state, {
+        //     articles: [...state.bosses, action.payload] /// /arf ad skoda thetta er ekki viss med thetta
+        // });
+        default: return state;
     }
 }
 
