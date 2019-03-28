@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getBosses } from '../../actions'
 import bossService from '../../services'
 //import PropTypes from 'prop-types'
+//import AddBossForm from './AddBossForm'
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -27,10 +28,15 @@ class BossContainer extends React.Component {
     
     
     render() {
-        const { bosses } = this.state.bosses.map(boss => ( <div>boss.name</div>));
+    const stuff = this.state.bosses.map(boss =><div key={boss.id}>{boss.name}</div>  );
         console.log(this.state)
-        return (
-            <div>hi ask</div>
+        return(
+             <div>
+                 <h3>
+                     {stuff}
+
+                     </h3>
+                     </div>
             )
         }
     }
