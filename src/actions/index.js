@@ -1,11 +1,10 @@
 //import bossService from '../services'
-import { FETCH_BOSSES, ADD_BOSS, FETCH_BOSS_DETAIL } from '../constants'
+import { FETCH_BOSSES, ADD_BOSS, FETCH_BOSS_DETAIL, DELETE_BOSS } from '../constants'
 
 export const getBosses = () => dispatch => {
     fetch("http://localhost:4500/api/bosses")
         .then(resp => { return resp.json() })
         .then(bossList => {
-            console.log('inside dispatch');
             dispatch({
                 type: FETCH_BOSSES,
                 payload: bossList
@@ -28,9 +27,45 @@ export const getBossDetail = (id) => dispatch => {
         )
 }
 
+export const deleteBoss = (id) => dispatch => {
+    console.log('deleteAction', id)
+    fetch(`http://localhost:4500/api/bosses/${id}`, {
+        method: 'DELETE',
+    })
+        .then(resp => {
+            console.log(resp.ok)
+            dispatch({
+                type: DELETE_BOSS,
+                payload: id
+            })
+        })
+}
+
+
+
+
 export const createBoss = boss => dispatch => {
     fetch('http://localhost:4500/api/bosses', {
         method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(boss)
+    })
+        .then(res => res.json())
+        .then(stuff => console.log(stuff))
+        .then(boss =>
+            dispatch({
+                type: ADD_BOSS,
+                payload: boss
+            }
+            )
+        )
+}
+
+export const editBoss = boss => dispatch => {
+    fetch('http://localhost:4500/api/bosses', {
+        method: 'PATCH',
         headers: {
             'content-type': 'application/json'
         },

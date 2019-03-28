@@ -1,4 +1,4 @@
-import { FETCH_BOSSES, ADD_BOSS, FETCH_BOSS_DETAIL, EDIT_BOSS } from '../constants'
+import { FETCH_BOSSES, ADD_BOSS, FETCH_BOSS_DETAIL, EDIT_BOSS, DELETE_BOSS } from '../constants'
 
 const initialState = {
     items: [],
@@ -14,7 +14,7 @@ const bossReducer = (state = initialState, action) => {
                 items: action.payload /// /arf ad skoda thetta er ekki viss med thetta
             });
             case ADD_BOSS: {
-                console.log('reducerAddBoss')
+                //console.log('reducerAddBoss')
                 return Object.assign({}, state, {
                     ...state,
                     item: action.payload /// /arf ad skoda thetta er ekki viss med thetta
@@ -32,7 +32,13 @@ const bossReducer = (state = initialState, action) => {
                 //console.log('reducerDetail')
                 //console.log('thisdude', action.payload)
                 return Object.assign({}, state, {
-                    ...state,
+                    newBoss: action.payload /// /arf ad skoda thetta er ekki viss med thetta
+                    });
+            }
+            case DELETE_BOSS: {
+                //console.log('reducerDetail')
+                console.log('thisdude deleteboss', action.payload)
+                return Object.assign({}, state, {
                     newBoss: action.payload /// /arf ad skoda thetta er ekki viss med thetta
                     });
             }

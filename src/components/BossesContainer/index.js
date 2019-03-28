@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getBosses } from '../../actions'
+import { getBosses, deleteBoss } from '../../actions'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom';
 
 class BossContainer extends React.Component {
     componentDidMount() {
-        this.props.getBosses();
-        console.log(this.props.getBosses(), 'mount')
-        console.log(this.props, 'myprops')
+        
+        this.props.getBosses()
     }
 
 
@@ -19,7 +18,6 @@ class BossContainer extends React.Component {
                 <div className='card-body'>
                     <img className='card-img-top'src={boss.img} alt={boss.name} />
                     <NavLink to={ `/bosses/${boss.id}` } className="breadcrumb-item"><h5 className='card-title'>{boss.name}</h5></NavLink>
-                    
                 </div>
             </div>
         );
@@ -36,14 +34,15 @@ class BossContainer extends React.Component {
 
 BossContainer.propTypes = {
     getBosses: PropTypes.func.isRequired,
+    deleteBoss: PropTypes.func.isRequired,
     bosses: PropTypes.array.isRequired,
-    newBoss: PropTypes.object
+    //newBoss: PropTypes.object
 }
 
 const mapStateToProps = state => ({
     bosses: state.bosses.items,
-    newBoss: state.bosses.item
+    //newBoss: state.bosses.item
 })
 //export default BossContainer
 
-export default connect(mapStateToProps, { getBosses })(BossContainer);
+export default connect(mapStateToProps, { getBosses, deleteBoss })(BossContainer);

@@ -1,36 +1,54 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getBossDetail } from '../../actions'
+import { getBossDetail, deleteBoss } from '../../actions'
 import PropTypes from 'prop-types'
-//import { NavLink } from 'react-router-dom';
+import { Redirect } from 'react-router-dom'
+import toastr from 'toastr'
 
 class BossDetail extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            redirect: false
+        }
+
+        this.deleteBossFunction = this.deleteBossFunction.bind(this);
+    }
+
     componentDidMount() {
         this.props.getBossDetail(this.props.match.params.bossId);
-        console.log(this.props, 'myprops')
+    }
+
+    deleteBossFunction() {
+        this.props.deleteBoss(this.props.match.params.bossId);
+        this.setState({ redirect: true });
+        toastr.success(this.props.boss.name + " Deleted", 'Success!');
     }
 
 
     render() {
-        console.log('hello from here', this.props)
         const boss = this.props.boss
         return (
             <div>
-            <div class="col-sm-5">
-                <img className='card-img-top' src={boss.img} alt={boss.name} />
-            </div >
-                <div class="card-body">
-                    <h4 class="card-title">{ boss.name }</h4>
-                    <p class="card-text">{boss.description}</p>
+                {this.state.redirect ? <Redirect to="/bosses" /> : null }
+                <div className="col-sm-5">
+                    <img className='card-img-top' src={boss.img} alt={boss.name} />
+                </div >
+                <div className="card-body">
+                    <h4 className="card-title">{boss.name}</h4>
+                    <p className="card-text">{boss.description}</p>
+                    <button onClick={this.deleteBossFunction}>delete</button>
                 </div>
-                </div>
+            </div>
         );
     }
 }
 
 BossDetail.propTypes = {
     getBossDetail: PropTypes.func.isRequired,
-    newBoss: PropTypes.object
+    deleteBoss: PropTypes.func.isRequired
+    //newBoss: PropTypes.object
 }
 
 const mapStateToProps = state => ({
@@ -38,7 +56,7 @@ const mapStateToProps = state => ({
 })
 //export default BossContainer
 
-export default connect(mapStateToProps, { getBossDetail })(BossDetail);
+export default connect(mapStateToProps, { getBossDetail, deleteBoss })(BossDetail);
 
 
 /* <div key={boss.id} className='card'>
