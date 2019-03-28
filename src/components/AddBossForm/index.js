@@ -61,9 +61,9 @@ class AddBossContainer extends React.Component {
                 description: this.state.fields.description,
             }
             this.props.createBoss(boss)
-            toastr.success('The form was successfully submitted!', 'Success!');
+            toastr.warning('The form was submitted to server!', 'Success!');
         } else {
-            toastr.error('The form was not successfully submitted!', 'Failed!');
+            toastr.error('Probably a missing field, could be something else though idk >:D', 'Failed!');
         }
 
 

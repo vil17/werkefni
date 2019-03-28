@@ -1,5 +1,6 @@
 //import bossService from '../services'
 import { FETCH_BOSSES, ADD_BOSS, FETCH_BOSS_DETAIL, DELETE_BOSS } from '../constants'
+import toastr from 'toastr'
 
 export const getBosses = () => dispatch => {
     fetch("http://localhost:4500/api/bosses")
@@ -14,11 +15,9 @@ export const getBosses = () => dispatch => {
 }
 
 export const getBossDetail = (id) => dispatch => {
-    //console.log('inside detil action')
     fetch(`http://localhost:4500/api/bosses/${id}`)
         .then(resp => { return resp.json() })
         .then(bossDetail => {
-            //console.log(bossDetail);
             dispatch({
                 type: FETCH_BOSS_DETAIL,
                 payload: bossDetail
@@ -28,21 +27,16 @@ export const getBossDetail = (id) => dispatch => {
 }
 
 export const deleteBoss = (id) => dispatch => {
-    console.log('deleteAction', id)
     fetch(`http://localhost:4500/api/bosses/${id}`, {
         method: 'DELETE',
     })
         .then(resp => {
-            console.log(resp.ok)
             dispatch({
                 type: DELETE_BOSS,
                 payload: id
             })
         })
 }
-
-
-
 
 export const createBoss = boss => dispatch => {
     fetch('http://localhost:4500/api/bosses', {
@@ -52,8 +46,12 @@ export const createBoss = boss => dispatch => {
         },
         body: JSON.stringify(boss)
     })
-        .then(res => res.json())
-        .then(stuff => console.log(stuff))
+        .then(resp => {
+            if(resp.ok){
+                toastr.success('The form was successfully submitted!', 'Success!');
+
+            }
+        })
         .then(boss =>
             dispatch({
                 type: ADD_BOSS,
@@ -72,7 +70,6 @@ export const editBoss = boss => dispatch => {
         body: JSON.stringify(boss)
     })
         .then(res => res.json())
-        .then(stuff => console.log(stuff))
         .then(boss =>
             dispatch({
                 type: ADD_BOSS,
