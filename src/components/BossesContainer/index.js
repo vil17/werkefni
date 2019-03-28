@@ -2,39 +2,33 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getBosses } from '../../actions'
 import PropTypes from 'prop-types'
-
-const divStyle = {
-    margin: '40px',
-    border: '5px solid pink',
-    width: '200px',
-};
+import { NavLink } from 'react-router-dom';
 
 class BossContainer extends React.Component {
-    componentWillMount() {
+    componentDidMount() {
         this.props.getBosses();
+        console.log(this.props.getBosses(), 'mount')
+        console.log(this.props, 'myprops')
     }
 
-    
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.newBoss) {
-      this.props.bosses.unshift(nextProps.newBoss);
-    }
-}
 
     render() {
         const stuff = this.props.bosses.map(boss =>
-            <div key={boss.id} className='card' style={divStyle}>
-                <div>
-                    <img className='img-thumbnail' src={boss.img} alt={boss.name} />
+        
+            <div key={boss.id} className='card'>
+                <div className='card-body'>
+                    <img className='card-img-top'src={boss.img} alt={boss.name} />
+                    <NavLink to={ `/bosses/${boss.id}` } className="breadcrumb-item"><h5 className='card-title'>{boss.name}</h5></NavLink>
+                    
                 </div>
-                <h3>{boss.name}</h3>
             </div>
         );
         return (
             <div>
-                <h3>
+                <hr />
+                <div className="card-columns">
                     {stuff}
-                </h3>
+                </div>
             </div>
         )
     }

@@ -1,9 +1,9 @@
 //import bossService from '../services'
-import { FETCH_BOSSES, ADD_BOSS } from '../constants'
+import { FETCH_BOSSES, ADD_BOSS, FETCH_BOSS_DETAIL } from '../constants'
 
 export const getBosses = () => dispatch => {
     fetch("http://localhost:4500/api/bosses")
-        .then(resp => { console.log(resp, 'asdasdasdasd'); return resp.json() })
+        .then(resp => { return resp.json() })
         .then(bossList => {
             console.log('inside dispatch');
             dispatch({
@@ -11,11 +11,24 @@ export const getBosses = () => dispatch => {
                 payload: bossList
             })
         }
-        ).then(stuff => console.log(stuff))
+        )
+}
+
+export const getBossDetail = (id) => dispatch => {
+    //console.log('inside detil action')
+    fetch(`http://localhost:4500/api/bosses/${id}`)
+        .then(resp => { return resp.json() })
+        .then(bossDetail => {
+            //console.log(bossDetail);
+            dispatch({
+                type: FETCH_BOSS_DETAIL,
+                payload: bossDetail
+            })
+        }
+        )
 }
 
 export const createBoss = boss => dispatch => {
-    console.log('adding boss')
     fetch('http://localhost:4500/api/bosses', {
         method: 'POST',
         headers: {
